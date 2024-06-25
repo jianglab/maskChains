@@ -1,30 +1,24 @@
-from chimerax.core.commands import CmdDesc, ModelArg, FloatArg, StringArg
-from chimerax.atomic import AtomicStructure
-from chimerax.map import Volume
+from chimerax.core.commands import CmdDesc, StringArg
+from chimerax.atomic import AtomicStructureArg
+from chimerax.map import MapArg
 
 desc = CmdDesc(
-    required=[("map", ModelArg),
-                ("model", ModelArg),
-                ("chain_ids", StringArg)],
-    synopsis='Mask density map based on closest chains'
+    required= [("map", MapArg)],
+    keyword = [("model", AtomicStructureArg),
+               ("chainIds", StringArg)],
+    required_arguments = ["model", "chainIds"],
+    synopsis='Mask density map based on closest chains. Example: maskChains #2 model #1 chainIds E,F'
 )
 
-def maskChains(session, map, model, chain_ids):
-    if not isinstance(map, Volume):
-        session.logger.error("First argument must be a volume")
-        return
-    if not isinstance(model, AtomicStructure):
-        session.logger.error("Second argument must be an atomic structure")
-        return
-
-    target_chains = chain_ids.split(',')
+def maskChains(session, map, model, chainIds):
+    target_chains = chainIds.split(',')
 
     chains = {}
     for _, chain_id, atoms in model.atoms.by_chain:
         chains[chain_id] = atoms.coords
     
     if len(chains)<3*len(target_chains):
-        session.logger.warning(f"\tWARNING: mask {len(target_chains)} chains out of {len(chains)} chains. Are you sure there are at least one additional layer of chains below and above the target layer?")
+        session.logger.warning(f"\tWARNING: the maskChains command assumes that there are additional chains surrounding the specified chains. However, you have specified {len(target_chains)} out of {len(chains)} chains in the model. If you are working on an amyloid structure, make sure that there are at least one additional layer of chains below and above the layer of the specified chains?")
     
     import numpy as np
     data = map.data.full_matrix()
