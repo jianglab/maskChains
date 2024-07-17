@@ -15,14 +15,14 @@ def maskChains(session, map, model, chainIds):
 
     chains = {}
     for _, chain_id, atoms in model.atoms.by_chain:
-        chains[chain_id] = atoms.coords
+        chains[chain_id] = atoms.scene_coords
     
     if len(chains)<3*len(target_chains):
         session.logger.warning(f"\tWARNING: the maskChains command assumes that there are additional chains surrounding the specified chains. However, you have specified {len(target_chains)} out of {len(chains)} chains in the model. If you are working on an amyloid structure, make sure that there are at least one additional layer of chains below and above the layer of the specified chains?")
     
     import numpy as np
-    data = map.data.full_matrix()
-    voxels = map.data.ijk_to_xyz(np.indices(data.shape).reshape(len(data.shape), -1).T[:, [2, 1, 0]])
+    data = map.data.matrix()
+    voxels = map.ijk_to_global_xyz(np.indices(data.shape).reshape(len(data.shape), -1).T[:, [2, 1, 0]])
 
     from scipy.spatial import KDTree
     for chain_id in chains:
@@ -46,11 +46,10 @@ def maskChains(session, map, model, chainIds):
     masked_data = data * mask
     
     from chimerax.map_data import ArrayGridData
-    from chimerax.map import volume_from_grid_data
-    grid = ArrayGridData(masked_data, origin = map.data.origin, step = map.data.step,
-                         cell_angles = map.data.cell_angles, rotation = map.data.rotation,
-                         name = map.name + " masked")
-    masked_map = volume_from_grid_data(grid, session)
+    masked_map = map.copy()
+    masked_map.name = map.name + " masked"
+    masked_map.data = ArrayGridData(masked_data, origin = map.data.origin, step = map.data.step,
+                         cell_angles = map.data.cell_angles, rotation = map.data.rotation)
     masked_map.set_parameters(surface_levels=[map.surfaces[0].level])
     session.logger.info(f"Created masked map: {masked_map.name}")
     
