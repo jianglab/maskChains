@@ -27,15 +27,16 @@ close all
 open 3741 from emdb
 open 5o3l
 maskChains #1 model #2 chainIds E,F
-volume #3 level 0.017
+hide #1
+hide #2
+hide #3
+show #3/E,F
+style #3/E,F stick
+volume #4 level 0.017
+color #4 #ffffb2bf
 windowsize 800 400
 camera ortho
 view orient
-hide #1
-hide #2
-show #2/E,F
-style #2/E,F stick
-color #3 #ffffb2bf
 turn z -30
 zoom 1.5
 save emd-3741_pdb-5o3l_chain-EF_thresh-0.017.png

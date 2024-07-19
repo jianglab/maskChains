@@ -56,12 +56,15 @@ def maskChains(session, map, model, chainIds):
     mask = np.isin(min_chain_id, target_chains).reshape(data.shape)
     masked_data = data * mask
     
+    from chimerax.map import Volume
     from chimerax.map_data import ArrayGridData
-    masked_map = map.copy()
-    masked_map.name = map.name + " masked"
-    masked_map.data = ArrayGridData(masked_data, origin = map.data.origin, step = map.data.step,
+    data = ArrayGridData(masked_data, origin = map.data.origin, step = map.data.step,
                          cell_angles = map.data.cell_angles, rotation = map.data.rotation)
-    masked_map.set_parameters(surface_levels=[map.surfaces[0].level])
+    masked_map = Volume(session, data, region=None, rendering_options=map.rendering_options)
+    masked_map.name = map.name + " masked"
+    session.models.add([masked_map])
+    map.display = False
+    
     session.logger.info(f"Created masked map: {masked_map.name}")
     
-    return masked_map
+    return new_model, masked_map
