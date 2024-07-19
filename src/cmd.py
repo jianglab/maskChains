@@ -19,6 +19,17 @@ def maskChains(session, map, model, chainIds):
     
     if len(chains)<3*len(target_chains):
         session.logger.warning(f"\tWARNING: the maskChains command assumes that there are additional chains surrounding the specified chains. However, you have specified {len(target_chains)} out of {len(chains)} chains in the model. If you are working on an amyloid structure, make sure that there are at least one additional layer of chains below and above the layer of the specified chains?")
+
+    new_model = model.copy()
+    new_model.name = f"{model.name} Chain {chainIds}"
+    new_model.display = True
+    for chain in new_model.chains:
+        if chain.chain_id in target_chains:
+            chain.display = True
+        else:
+            chain.display = False
+    session.models.add([new_model])
+    model.display = False
     
     import numpy as np
     data = map.data.matrix()

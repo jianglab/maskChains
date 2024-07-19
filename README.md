@@ -8,7 +8,7 @@ Example: [EMD_3741](https://www.ebi.ac.uk/emdb/EMD-3741) masked with chain E,F o
 In ChimeraX, go to **Tools** menu and select **More Tools** to open the **Chimerax Toolshed**, find **maskChains** and click the **Install** button.
 
 Alternatively, you can install it following these steps:
-* Download the *ChimeraX_maskChains-1.2-py3-none-any.whl* file in the *dist* folder of this repository
+* Download the *ChimeraX_maskChains-1.3-py3-none-any.whl* file in the *dist* folder of this repository
 * In the ChimeraX Command input box at the bottom of the display window, run this command  
 `toolshed install <path/to/the/downloaded/whl/file>`
 
