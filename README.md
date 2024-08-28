@@ -45,6 +45,6 @@ save emd-3741_pdb-5o3l_chain-EF_thresh-0.017.png
 ### Citation
 The ***maskChains*** tool was developed for our cryo-EM project on the structures of amyloids. If you find ***maskChains*** useful, please cite this reference:
 
-*M. R. Hoq\*, A. Fernandez\*, F. S. Vago\*, G. I. Hallinan, S. R. Bharath, D. Li, K. A. Ozcan, H. J. Garringer, W. Jiang\*, R. Vidal\*, B. Ghetti\*, [Cryo-EM structures of cotton wool plaques' amyloid β and of tau filaments in dominantly inherited Alzheimer disease](https://doi.org/10.1007/s00401-024-02649-6). Acta Neuropathol. 148, 20 (2024).*
+*M. R. Hoq\*, A. Fernandez\*, F. S. Vago\*, G. I. Hallinan, S. R. Bharath, D. Li, K. A. Ozcan, H. J. Garringer, W. Jiang\*, R. Vidal\*, B. Ghetti\*, [Cryo-EM structures of cotton wool plaques' amyloid β and of tau filaments in dominantly inherited Alzheimer disease](https://link.springer.com/article/10.1007/s00401-024-02786-y). Acta Neuropathol. 148, 20 (2024).*
 
 
